@@ -34,19 +34,19 @@ Walk your container over to a plant and press **Space** to water it. Keep them a
 
 **macOS (Apple Silicon)**
 ```sh
-curl -L https://github.com/YOUR_USER/fernctl/releases/latest/download/fernctl-aarch64-apple-darwin -o fernctl
+curl -L https://github.com/BenSimmers/fernctl/releases/latest/download/fernctl-aarch64-apple-darwin -o fernctl
 chmod +x fernctl && ./fernctl
 ```
 
 **macOS (Intel)**
 ```sh
-curl -L https://github.com/YOUR_USER/fernctl/releases/latest/download/fernctl-x86_64-apple-darwin -o fernctl
+curl -L https://github.com/BenSimmers/fernctl/releases/latest/download/fernctl-x86_64-apple-darwin -o fernctl
 chmod +x fernctl && ./fernctl
 ```
 
 **Linux (x86_64)**
 ```sh
-curl -L https://github.com/YOUR_USER/fernctl/releases/latest/download/fernctl-x86_64-unknown-linux-gnu -o fernctl
+curl -L https://github.com/BenSimmers/fernctl/releases/latest/download/fernctl-x86_64-unknown-linux-gnu -o fernctl
 chmod +x fernctl && ./fernctl
 ```
 
@@ -55,7 +55,7 @@ chmod +x fernctl && ./fernctl
 Requires Rust ([rustup.rs](https://rustup.rs)) and Docker.
 
 ```sh
-git clone https://github.com/YOUR_USER/fernctl
+git clone https://github.com/BenSimmers/fernctl
 cd fernctl
 make run
 ```
