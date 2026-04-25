@@ -7,7 +7,7 @@ use crate::modules::character::{
     THIRSTY_PLANT_THOUGHTS, WATERING_THOUGHTS,
 };
 use crate::modules::docker::{fetch_containers, stop_container, DockerContainer};
-use crate::modules::office::{waypoints, PLANTS};
+use crate::modules::office::{generate_plants, waypoints, PlantPos};
 
 pub const PLANT_MAX_THIRST: u32 = 600; // ~48s at 80ms/tick
 const PLANT_WATER_DIST: f32 = 8.0;
@@ -20,6 +20,7 @@ pub struct App {
     pub last_refresh: Instant,
     pub office_width: u16,
     pub office_height: u16,
+    pub plants: Vec<PlantPos>,
     pub plant_thirsts: Vec<u32>,
 }
 
@@ -39,8 +40,14 @@ impl App {
             last_refresh: Instant::now(),
             office_width: 80,
             office_height: 30,
-            plant_thirsts: vec![0; PLANTS.len()],
+            plants: generate_plants(4, 80, 30),
+            plant_thirsts: vec![0; 4],
         }
+    }
+
+    pub fn init_plants(&mut self, term_width: u16, term_height: u16) {
+        self.plants = generate_plants(4, term_width, term_height);
+        self.plant_thirsts = vec![0; self.plants.len()];
     }
 
     pub fn refresh(&mut self) {
@@ -81,7 +88,7 @@ impl App {
     pub fn update(&mut self) {
         self.tick += 1;
         let mut rng = rand::thread_rng();
-        let wps = waypoints();
+        let wps = waypoints(&self.plants);
 
         // --- Plant game mechanic ---
         let has_running = self.characters.iter().any(|c| c.state == ContainerState::Running);
@@ -209,7 +216,7 @@ impl App {
 
         if let Some((cx, cy)) = selected_pos {
             let mut watered = false;
-            for (i, plant) in PLANTS.iter().enumerate() {
+            for (i, plant) in self.plants.iter().enumerate() {
                 let dx = cx - plant.game_x;
                 let dy = cy - plant.game_y;
                 if (dx * dx + dy * dy).sqrt() < PLANT_WATER_DIST {
@@ -230,7 +237,7 @@ impl App {
             if ch.state != ContainerState::Running {
                 return false;
             }
-            PLANTS.iter().any(|plant| {
+            self.plants.iter().any(|plant| {
                 let dx = ch.x - plant.game_x;
                 let dy = ch.y - plant.game_y;
                 (dx * dx + dy * dy).sqrt() < PLANT_WATER_DIST

@@ -8,7 +8,7 @@ use ratatui::{
 
 use crate::modules::app::{App, PLANT_MAX_THIRST};
 use crate::modules::character::{Character, ContainerState};
-use crate::modules::office::{office_furniture, plant_art, Furniture, PlantPos, PLANTS};
+use crate::modules::office::{office_furniture, plant_art, Furniture, PlantPos};
 
 pub fn draw(f: &mut Frame, app: &App) {
     let area = f.area();
@@ -48,7 +48,7 @@ pub fn draw(f: &mut Frame, app: &App) {
     for furn in &furniture {
         draw_furniture_piece(f, furn, area);
     }
-    for (i, plant) in PLANTS.iter().enumerate() {
+    for (i, plant) in app.plants.iter().enumerate() {
         let thirst_ratio = app.plant_thirsts[i] as f32 / PLANT_MAX_THIRST as f32;
         draw_plant(f, plant, thirst_ratio, area);
     }

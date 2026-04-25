@@ -72,7 +72,7 @@ pub const THIRSTY_PLANT_THOUGHTS: &[&str] = &[
 
 impl Character {
     pub fn from_container(c: &DockerContainer, index: usize) -> Self {
-        let wps = waypoints();
+        let wps = waypoints(&[]);
         let wp_idx = index % wps.len();
         let (sx, sy) = wps[wp_idx];
         let state = if c.state.contains("running") {

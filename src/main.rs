@@ -22,9 +22,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut terminal = Terminal::new(backend)?;
 
     let mut app = App::new();
+    let size = terminal.size()?;
+    app.init_plants(size.width, size.height);
     let tick_rate = Duration::from_millis(80);
 
+    terminal.clear()?;
+
     loop {
+
         terminal.draw(|f| draw(f, &app))?;
 
         if crossterm::event::poll(tick_rate)? {
