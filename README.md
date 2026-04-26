@@ -32,6 +32,13 @@ Walk your container over to a plant and press **Space** to water it. Keep them a
 
 ## Install
 
+**macOS / Linux (auto-detect)**
+```sh
+curl -sL https://raw.githubusercontent.com/BenSimmers/fernctl/main/install.sh | bash
+```
+
+Or manually for your platform:
+
 **macOS (Apple Silicon)**
 ```sh
 curl -L https://github.com/BenSimmers/fernctl/releases/latest/download/fernctl-aarch64-apple-darwin -o fernctl
