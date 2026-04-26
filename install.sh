@@ -16,6 +16,10 @@ if [[ "$OS" == "Darwin" ]]; then
   fi
 elif [[ "$OS" == "Linux" ]]; then
   TARGET="x86_64-unknown-linux-gnu"
+elif [[ "$OS" == *"MINGW"* || "$OS" == *"MSYS"* || "$OS" == *"CYGWIN"* ]]; then
+  echo "Windows detected. Please use the PowerShell installer instead:" >&2
+  echo "  irm https://raw.githubusercontent.com/BenSimmers/fernctl/main/install.ps1 | iex" >&2
+  exit 1
 else
   echo "Unsupported operating system: $OS" >&2
   exit 1

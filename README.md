@@ -37,6 +37,11 @@ Walk your container over to a plant and press **Space** to water it. Keep them a
 curl -sL https://raw.githubusercontent.com/BenSimmers/fernctl/main/install.sh | bash
 ```
 
+**Windows (PowerShell)**
+```powershell
+irm https://raw.githubusercontent.com/BenSimmers/fernctl/main/install.ps1 | iex
+```
+
 Or manually for your platform:
 
 **macOS (Apple Silicon)**
@@ -55,6 +60,12 @@ chmod +x fernctl && ./fernctl
 ```sh
 curl -L https://github.com/BenSimmers/fernctl/releases/latest/download/fernctl-x86_64-unknown-linux-gnu -o fernctl
 chmod +x fernctl && ./fernctl
+```
+
+**Windows (x86_64)**
+```powershell
+Invoke-WebRequest -Uri https://github.com/BenSimmers/fernctl/releases/latest/download/fernctl-x86_64-pc-windows-msvc.exe -OutFile fernctl.exe
+.\fernctl.exe
 ```
 
 ## Build from source
