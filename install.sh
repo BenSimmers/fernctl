@@ -32,9 +32,30 @@ if [ -z "$DOWNLOAD_URL" ]; then
   exit 1
 fi
 
-# Download the binary and make it executable.
-echo "Downloading fernctl for $TARGET..."
-curl -sL -o fernctl "$DOWNLOAD_URL"
-chmod +x fernctl
+# Determine install directory.
+if [[ -w /usr/local/bin ]]; then
+  INSTALL_DIR="/usr/local/bin"
+else
+  INSTALL_DIR="$HOME/.local/bin"
+  mkdir -p "$INSTALL_DIR"
+fi
 
-echo "fernctl has been installed successfully. You can now run it with ./fernctl"
+# Download the binary and install it.
+echo "Downloading fernctl for $TARGET..."
+curl -sL -o "$INSTALL_DIR/fernctl" "$DOWNLOAD_URL"
+chmod +x "$INSTALL_DIR/fernctl"
+
+echo "fernctl has been installed to $INSTALL_DIR/fernctl"
+
+# Warn if the install dir is not on PATH.
+if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
+  echo ""
+  echo "NOTE: $INSTALL_DIR is not in your PATH."
+  echo "Add the following to your shell config (~/.zshrc, ~/.bashrc, etc.):"
+  echo ""
+  echo "  export PATH=\"$INSTALL_DIR:\$PATH\""
+  echo ""
+  echo "Then restart your shell or run: source ~/.zshrc"
+else
+  echo "You can now run it with: fernctl"
+fi
